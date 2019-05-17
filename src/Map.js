@@ -6,7 +6,7 @@ import MapGL, { GeolocateControl } from "react-map-gl";
 import { makeStyles } from "@material-ui/core/styles";
 
 //components
-import ReportButton from "./ReportButton";
+import Report from "./Report";
 
 //material-ui styles
 const useStyles = makeStyles(theme => ({
@@ -53,7 +53,7 @@ export default function Map() {
         "pk.eyJ1IjoicGV0ZXJjYWdlZnJlZWNsaW1iaW5nIiwiYSI6ImNqdnM5MTY1czFsbDQzem8xd3J3MXMzMGkifQ.F9rpR7C-Ey2pCheG2yjQXA"
       }
     >
-      <ReportButton />
+      <Report />
       <GeolocateControl
         style={geolocateStyle}
         onViewportChange={_onViewportChange}

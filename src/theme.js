@@ -19,6 +19,26 @@ const theme = createMuiTheme({
     background: {
       default: "#fff"
     }
+  },
+  overrides: {
+    MuiPaper: {
+      rounded: {
+        borderRadius: 8
+      }
+    },
+    MuiButton: {
+      root: {
+        textTransform: "none",
+        borderRadius: 8
+      }
+    },
+    MuiFab: {
+      root: {
+        textTransform: "none",
+        backgroundColor: "#fff",
+        color: blue[500]
+      }
+    }
   }
 });
 
