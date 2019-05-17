@@ -36,7 +36,9 @@ export default function Map() {
   });
 
   //viewport change handler
-  const _onViewportChange = viewport => setViewport({ viewport });
+  const _onViewportChange = viewport => {
+    setViewport(viewport);
+  };
 
   //main return
   return (
@@ -46,10 +48,7 @@ export default function Map() {
       onViewportChange={_onViewportChange}
       width={"100%"}
       height={"100vh"}
-      latitude={43.188576}
-      longitude={-71.826244}
-      zoom={12}
-      mapStyle="mapbox://styles/mapbox/dark-v9"
+      mapStyle="mapbox://styles/mapbox/streets-v9"
       mapboxApiAccessToken={
         "pk.eyJ1IjoicGV0ZXJjYWdlZnJlZWNsaW1iaW5nIiwiYSI6ImNqdnM5MTY1czFsbDQzem8xd3J3MXMzMGkifQ.F9rpR7C-Ey2pCheG2yjQXA"
       }

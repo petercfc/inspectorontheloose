@@ -5,6 +5,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import blue from "@material-ui/core/colors/blue";
 
 //material-ui styles
 const useStyles = makeStyles(theme => ({
@@ -18,7 +19,9 @@ const useStyles = makeStyles(theme => ({
   fab: {
     position: "fixed",
     bottom: 32,
-    textTransform: "none"
+    textTransform: "none",
+    color: blue[500],
+    backgroundColor: "#fff"
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
