@@ -10,15 +10,26 @@ import MapGL, {
 //material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
+import IconButton from "@material-ui/core/IconButton";
+import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
+import Typography from "@material-ui/core/Typography";
 
 //components
 import Report from "./Report";
-import ReportPin from "./ReportPin";
-import ReportPopup from "./ReportPopup";
+import ReportPopover from "./ReportPopover";
 
 //material-ui styles
 const useStyles = makeStyles(theme => ({
-  map: {}
+  pin: {},
+  typography: {
+    position: "relative",
+    top: -50,
+    left: 13
+  },
+  button: {
+    transform: "translate(-24px, -33px)"
+  },
+  popover: {}
 }));
 
 //mapbox geolocate button style
@@ -42,15 +53,15 @@ const reports = [
     timestamp: "11:00am",
     user: "Anonymous",
     message: "Yo mang.",
-    latitude: 40.6643,
-    longitude: -73.9385
+    latitude: 43.186258,
+    longitude: -71.826068
   },
   {
     id: "222",
     user: "Anonymous",
     message: "Sick bird.",
-    latitude: 42.6643,
-    longitude: -71.9385
+    latitude: 43.207356,
+    longitude: -71.855017
   }
 ];
 
@@ -69,19 +80,20 @@ export default function Map() {
   });
 
   //viewport state hook
-  const [popupInfo, setPopupInfo] = useState(null);
+  const [popoverInfo, setPopoverInfo] = useState(null);
 
   //popover anchor
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  //popover is open
+  const open = Boolean(anchorEl);
+  //popover id
+  const id = open ? "simple-popover" : null;
 
   //handle popover close
   function handleClose() {
     setAnchorEl(null);
   }
-
-  //popover init
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : null;
 
   //viewport change handler
   const viewportChange = viewport => {
@@ -91,17 +103,25 @@ export default function Map() {
   const renderReportMarker = (report, index) => {
     return (
       <Marker
+        className={classes.pin}
         key={`marker-${index}`}
         longitude={report.longitude}
         latitude={report.latitude}
       >
-        <ReportPin
-          size={20}
+        <Typography className={classes.typography} variant="caption">
+          12m
+        </Typography>
+        <IconButton
+          color="primary"
           onClick={event => {
             setAnchorEl(event.currentTarget);
-            setPopupInfo(report);
+            setPopoverInfo(report);
           }}
-        />
+          className={classes.button}
+          aria-label="Delete"
+        >
+          <PersonPinCircleIcon />
+        </IconButton>
       </Marker>
     );
   };
@@ -109,6 +129,7 @@ export default function Map() {
   const renderPopup = () => {
     return (
       <Popover
+        className={classes.popover}
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -119,10 +140,10 @@ export default function Map() {
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "center"
+          horizontal: "left"
         }}
       >
-        <ReportPopup info={popupInfo} />
+        <ReportPopover info={popoverInfo} />
       </Popover>
     );
   };

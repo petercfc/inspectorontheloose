@@ -8,10 +8,10 @@ import pink from "@material-ui/core/colors/pink";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: blue[500]
+      main: red[500]
     },
     secondary: {
-      main: pink[500]
+      main: red[500]
     },
     error: {
       main: red[500]
@@ -36,7 +36,7 @@ const theme = createMuiTheme({
       root: {
         textTransform: "none",
         backgroundColor: "#fff",
-        color: blue[500]
+        color: red[500]
       }
     }
   }

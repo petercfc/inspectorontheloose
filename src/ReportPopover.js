@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 //main export
-export default function ReportPopup(props) {
+export default function ReportPopover(props) {
   //destructure props
   const { info } = props;
 
