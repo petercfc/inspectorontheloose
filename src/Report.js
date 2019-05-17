@@ -39,12 +39,16 @@ const useStyles = makeStyles(theme => ({
 export default function ReportButton() {
   //material-ui hook
   const classes = useStyles();
+
+  //dialog open state hook
   const [open, setOpen] = React.useState(false);
 
+  //fab open
   function handleClickOpen() {
     setOpen(true);
   }
 
+  //fab close
   function handleClose() {
     setOpen(false);
   }
