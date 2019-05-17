@@ -12,7 +12,7 @@ export default function Map() {
   return (
     <MapGL
       width={"100%"}
-      height={450}
+      height={"100vh"}
       latitude={43.188576}
       longitude={-71.826244}
       zoom={12}
