@@ -1,9 +1,12 @@
 //other
 import React from "react";
 
+//firebase
+import { withFirebase } from "./Firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
+
 //material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import blue from "@material-ui/core/colors/blue";
 import Button from "@material-ui/core/Button";
 import Fab from "@material-ui/core/Fab";
 import AccessibilityNewIcon from "@material-ui/icons/AccessibilityNew";
@@ -53,6 +56,11 @@ export default function ReportButton() {
     setOpen(false);
   }
 
+  //fab close
+  function handleSubmit() {
+    setOpen(false);
+  }
+
   //main return
   return (
     <div className={classes.root}>
@@ -88,9 +96,7 @@ export default function ReportButton() {
           />
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleClose} color="primary">
             Create Report
           </Button>

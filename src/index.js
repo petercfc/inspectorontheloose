@@ -10,13 +10,16 @@ import theme from "./theme";
 
 //components
 import App from "./App";
+import Firebase, { FirebaseContext } from "./Firebase";
 
 //main render
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
-    <App />
+    <FirebaseContext.Provider value={new Firebase()}>
+      <App />
+    </FirebaseContext.Provider>
   </ThemeProvider>,
   document.querySelector("#root")
 );

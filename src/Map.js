@@ -6,6 +6,11 @@ import MapGL, {
   NavigationControl,
   GeolocateControl
 } from "react-map-gl";
+import moment from "moment";
+
+//firebase
+import { withFirebase } from "./Firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 //material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   typography: {
     position: "relative",
     top: -50,
-    left: 13
+    left: 32
   },
   button: {
     transform: "translate(-24px, -33px)"
@@ -47,28 +52,17 @@ const navStyle = {
   padding: "10px"
 };
 
-const reports = [
-  {
-    id: "111",
-    timestamp: "11:00am",
-    user: "Anonymous",
-    message: "Yo mang.",
-    latitude: 43.186258,
-    longitude: -71.826068
-  },
-  {
-    id: "222",
-    user: "Anonymous",
-    message: "Sick bird.",
-    latitude: 43.207356,
-    longitude: -71.855017
-  }
-];
-
 //main export
-export default function Map() {
+const Map = props => {
+  //destructure props
+  const { firebase } = props;
+
   //material-ui hook
   const classes = useStyles();
+
+  const { error, loading, value } = useCollection(
+    firebase.db.collection("reports")
+  );
 
   //viewport state hook
   const [viewport, setViewport] = useState({
@@ -98,32 +92,6 @@ export default function Map() {
   //viewport change handler
   const viewportChange = viewport => {
     setViewport(viewport);
-  };
-
-  const renderReportMarker = (report, index) => {
-    return (
-      <Marker
-        className={classes.pin}
-        key={`marker-${index}`}
-        longitude={report.longitude}
-        latitude={report.latitude}
-      >
-        <Typography className={classes.typography} variant="caption">
-          12m
-        </Typography>
-        <IconButton
-          color="primary"
-          onClick={event => {
-            setAnchorEl(event.currentTarget);
-            setPopoverInfo(report);
-          }}
-          className={classes.button}
-          aria-label="Delete"
-        >
-          <PersonPinCircleIcon />
-        </IconButton>
-      </Marker>
-    );
   };
 
   const renderPopup = () => {
@@ -170,9 +138,36 @@ export default function Map() {
         positionOptions={{ enableHighAccuracy: true }}
         trackUserLocation={true}
       />
-      {reports.map(renderReportMarker)}
+      {value &&
+        value.docs.map((report, index) => (
+          <Marker
+            className={classes.pin}
+            key={`marker-${index}`}
+            longitude={report.data().location._long}
+            latitude={report.data().location._lat}
+          >
+            <Typography className={classes.typography} variant="caption">
+              {moment(report._document.version.timestamp.toDate())
+                .startOf("hour")
+                .fromNow()}
+            </Typography>
+            <IconButton
+              color="primary"
+              onClick={event => {
+                setAnchorEl(event.currentTarget);
+                setPopoverInfo(report);
+              }}
+              className={classes.button}
+              aria-label="Delete"
+            >
+              <PersonPinCircleIcon />
+            </IconButton>
+          </Marker>
+        ))}
       {renderPopup()}
       <Report />
     </MapGL>
   );
-}
+};
+
+export default withFirebase(Map);
